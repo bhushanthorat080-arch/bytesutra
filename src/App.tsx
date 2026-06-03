@@ -39,11 +39,12 @@ import {
 } from 'lucide-react';
 import { ByteSutraLogo } from './components/SutraLogo';
 import { PartnerClock } from './components/PartnerClock';
-import { Interactive3DPortal } from './components/Interactive3DPortal';
-import { Interactive3DChart } from './components/Interactive3DChart';
 import { SERVICES, PORTFOLIO, TESTIMONIALS, FAQS, TRUST_STATS, WHY_US_PILLARS } from './data';
 import { Service, Project, Testimonial } from './types';
-import { supabase } from './supabaseClient';
+
+// Lazy loaded heavy 3D-effect UI components to minimize initial JS bundle size and TBT
+const Interactive3DPortal = React.lazy(() => import('./components/Interactive3DPortal').then(m => ({ default: m.Interactive3DPortal })));
+const Interactive3DChart = React.lazy(() => import('./components/Interactive3DChart').then(m => ({ default: m.Interactive3DChart })));
 
 // Static date snapshots initialized once to avoid heavy continuous parent component ticks
 const systemLoadTime = new Date();
@@ -191,6 +192,7 @@ export default function App() {
     setIsSubmitting(true);
     try {
       // 1. Insert into Supabase table
+      const { supabase } = await import('./supabaseClient');
       const { data, error } = await supabase
         .from('enquiries')
         .insert([
@@ -266,6 +268,7 @@ export default function App() {
     try {
       // 1. Update existing row in Supabase
       if (enquiryId) {
+        const { supabase } = await import('./supabaseClient');
         const { error } = await supabase
           .from('enquiries')
           .update({
@@ -679,7 +682,9 @@ export default function App() {
 
                     {/* Rendering rotating 3D interface */}
                     <div className="py-2">
-                      <Interactive3DPortal />
+                      <React.Suspense fallback={<div className="w-full h-[520px] rounded-[3rem] bg-slate-800/10 animate-pulse flex items-center justify-center text-slate-400 text-xs font-mono">Initializing Core...</div>}>
+                        <Interactive3DPortal />
+                      </React.Suspense>
                     </div>
                   </div>
 
@@ -735,8 +740,10 @@ export default function App() {
               </div>
 
               {/* Dynamic Performance metrics Comparison Section (3D Charts stage) */}
-              <div className="mb-16">
-                <Interactive3DChart />
+              <div className="mb-16 min-h-[380px]">
+                <React.Suspense fallback={<div className="w-full max-w-4xl mx-auto h-[380px] rounded-[2.5rem] bg-slate-800/10 animate-pulse flex items-center justify-center text-slate-400 text-xs font-mono">Initializing Engine Chart...</div>}>
+                  <Interactive3DChart />
+                </React.Suspense>
               </div>
 
               {/* Immersive CTA conversion block */}
@@ -1008,7 +1015,9 @@ export default function App() {
           </motion.div>
 
           {/* Interactive 3D Holographic Portal (Curiosity & visual magnet, especially stunning on mobile!) */}
-          <Interactive3DPortal />
+          <React.Suspense fallback={<div className="w-full max-w-lg mx-auto h-[520px] rounded-[3rem] bg-slate-100 animate-pulse flex items-center justify-center text-slate-400 text-xs font-mono">Initializing Core...</div>}>
+            <Interactive3DPortal />
+          </React.Suspense>
 
           {/* Interactive Core Business Benefits Frame with Stagger & Hover Squeeze */}
           <div className="w-full max-w-5xl mb-24">
@@ -1751,7 +1760,11 @@ export default function App() {
           </div>
 
           {/* Dynamic 3D Interactive Animated Chart */}
-          <Interactive3DChart />
+          <div className="w-full min-h-[380px]">
+            <React.Suspense fallback={<div className="w-full max-w-4xl mx-auto h-[380px] rounded-[2.5rem] bg-slate-100 animate-pulse flex items-center justify-center text-slate-400 text-xs font-mono">Initializing Engine Chart...</div>}>
+              <Interactive3DChart />
+            </React.Suspense>
+          </div>
 
         </section>
 
