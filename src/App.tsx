@@ -96,6 +96,8 @@ export default function App() {
   const [selectedBookingDate, setSelectedBookingDate] = useState<string>('');
   const [selectedBookingTime, setSelectedBookingTime] = useState<string>('');
   const [selectedTimezone, setSelectedTimezone] = useState<string>('us-est');
+  const [customTimeMode, setCustomTimeMode] = useState<boolean>(false);
+  const [customTime, setCustomTime] = useState<string>('');
 
   // Set default booking date as tomorrow relative to 2026-06-02
   useEffect(() => {
@@ -252,6 +254,14 @@ export default function App() {
 
   // Booking confirm handler
   const handleBookingConfirm = async () => {
+    if (!selectedBookingDate) {
+      alert('Please select an available booking date first.');
+      return;
+    }
+    if (!selectedBookingTime) {
+      alert('Please select an available time or enter your custom time slot.');
+      return;
+    }
     setIsSubmitting(true);
     try {
       // 1. Update existing row in Supabase
@@ -396,6 +406,16 @@ export default function App() {
   const handleTimezoneChange = (tzId: string) => {
     setSelectedTimezone(tzId);
     const nextTz = countryTimezones.find(t => t.id === tzId) || countryTimezones[0];
+    
+    if (customTimeMode) {
+      if (customTime) {
+        setSelectedBookingTime(`${customTime} ${nextTz.timezoneLabel}`);
+      } else {
+        setSelectedBookingTime('');
+      }
+      return;
+    }
+    
     const activeTz = countryTimezones.find(t => t.id === selectedTimezone) || countryTimezones[0];
     const renderedSlotsInPrevTz = baseBookingTimes.map(baseTime => 
       convertEstTimeToLocal(baseTime, activeTz.offsetHours, activeTz.timezoneLabel)
@@ -408,6 +428,12 @@ export default function App() {
     } else {
       setSelectedBookingTime(convertEstTimeToLocal('10:30 AM', nextTz.offsetHours, nextTz.timezoneLabel));
     }
+  };
+
+  const handleCustomTimeChange = (val: string) => {
+    setCustomTime(val);
+    const activeTz = countryTimezones.find(t => t.id === selectedTimezone) || countryTimezones[0];
+    setSelectedBookingTime(val ? `${val} ${activeTz.timezoneLabel}` : '');
   };
 
   const bookingTimes = getLocalBookingTimes();
@@ -2273,9 +2299,12 @@ export default function App() {
                               <button
                                 key={idx}
                                 type="button"
-                                onClick={() => setSelectedBookingTime(time)}
+                                onClick={() => {
+                                  setCustomTimeMode(false);
+                                  setSelectedBookingTime(time);
+                                }}
                                 className={`px-2.5 py-2.5 rounded-xl text-[10px] font-bold text-center border transition-all cursor-pointer ${
-                                  selectedBookingTime === time
+                                  !customTimeMode && selectedBookingTime === time
                                     ? 'bg-[#1479ea] text-white border-[#1479ea] shadow-sm'
                                     : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
                                 }`}
@@ -2283,7 +2312,50 @@ export default function App() {
                                 {time}
                               </button>
                             ))}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setCustomTimeMode(true);
+                                const activeTz = countryTimezones.find(t => t.id === selectedTimezone) || countryTimezones[0];
+                                setSelectedBookingTime(customTime ? `${customTime} ${activeTz.timezoneLabel}` : '');
+                              }}
+                              className={`px-2.5 py-2.5 rounded-xl text-[10px] font-bold text-center border transition-all cursor-pointer ${
+                                customTimeMode
+                                  ? 'bg-[#1479ea] text-white border-[#1479ea] shadow-sm'
+                                  : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+                              }`}
+                            >
+                              Custom Time...
+                            </button>
                           </div>
+
+                          {/* Custom time input field when customTimeMode is enabled */}
+                          <AnimatePresence>
+                            {customTimeMode && (
+                              <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                className="mt-3 overflow-hidden"
+                              >
+                                <label className="text-[9px] font-mono font-extrabold tracking-wider text-slate-400 uppercase block mb-1.5">
+                                  Enter Custom Time Slot ({countryTimezones.find(t => t.id === selectedTimezone)?.timezoneLabel || 'Local'})
+                                </label>
+                                <div className="relative flex items-center">
+                                  <input
+                                    type="text"
+                                    value={customTime}
+                                    onChange={(e) => handleCustomTimeChange(e.target.value)}
+                                    placeholder="e.g., 2:00 PM, 11:30 AM, or 6:00 PM - 7:00 PM"
+                                    className="w-full px-4 py-3 pr-16 rounded-xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-[#1e3a8a] bg-white shadow-sm font-semibold transition-colors"
+                                  />
+                                  <div className="absolute right-3 text-[9px] font-mono font-black text-slate-400 bg-slate-100 px-2 py-1 rounded-md pointer-events-none select-none uppercase">
+                                    {countryTimezones.find(t => t.id === selectedTimezone)?.timezoneLabel || 'Local'}
+                                  </div>
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
                         </div>
 
                         {/* Explicit confirmation */}
