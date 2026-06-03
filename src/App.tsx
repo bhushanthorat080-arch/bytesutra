@@ -5,38 +5,36 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import {
-  Globe,
-  Cpu,
-  Smartphone,
-  ShoppingBag,
-  Database,
-  ArrowRight,
-  ArrowLeft,
-  Check,
-  CheckCircle,
-  TrendingUp,
-  Clock,
-  User,
-  Users,
-  Award,
-  ShieldCheck,
-  ChevronRight,
-  Calendar as CalendarIcon,
-  DollarSign,
-  Menu,
-  X,
-  Briefcase,
-  Layers,
-  Lightbulb,
-  Zap,
-  Sparkles,
-  HelpCircle,
-  Clock3,
-  ThumbsUp,
-  Target,
-  MessageCircle
-} from 'lucide-react';
+import Globe from 'lucide-react/dist/esm/icons/globe';
+import Cpu from 'lucide-react/dist/esm/icons/cpu';
+import Smartphone from 'lucide-react/dist/esm/icons/smartphone';
+import ShoppingBag from 'lucide-react/dist/esm/icons/shopping-bag';
+import Database from 'lucide-react/dist/esm/icons/database';
+import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right';
+import ArrowLeft from 'lucide-react/dist/esm/icons/arrow-left';
+import Check from 'lucide-react/dist/esm/icons/check';
+import CheckCircle from 'lucide-react/dist/esm/icons/check-circle';
+import TrendingUp from 'lucide-react/dist/esm/icons/trending-up';
+import Clock from 'lucide-react/dist/esm/icons/clock';
+import User from 'lucide-react/dist/esm/icons/user';
+import Users from 'lucide-react/dist/esm/icons/users';
+import Award from 'lucide-react/dist/esm/icons/award';
+import ShieldCheck from 'lucide-react/dist/esm/icons/shield-check';
+import ChevronRight from 'lucide-react/dist/esm/icons/chevron-right';
+import CalendarIcon from 'lucide-react/dist/esm/icons/calendar';
+import DollarSign from 'lucide-react/dist/esm/icons/dollar-sign';
+import Menu from 'lucide-react/dist/esm/icons/menu';
+import X from 'lucide-react/dist/esm/icons/x';
+import Briefcase from 'lucide-react/dist/esm/icons/briefcase';
+import Layers from 'lucide-react/dist/esm/icons/layers';
+import Lightbulb from 'lucide-react/dist/esm/icons/lightbulb';
+import Zap from 'lucide-react/dist/esm/icons/zap';
+import Sparkles from 'lucide-react/dist/esm/icons/sparkles';
+import HelpCircle from 'lucide-react/dist/esm/icons/help-circle';
+import Clock3 from 'lucide-react/dist/esm/icons/clock-3';
+import ThumbsUp from 'lucide-react/dist/esm/icons/thumbs-up';
+import Target from 'lucide-react/dist/esm/icons/target';
+import MessageCircle from 'lucide-react/dist/esm/icons/message-circle';
 import { ByteSutraLogo } from './components/SutraLogo';
 import { PartnerClock } from './components/PartnerClock';
 import { SERVICES, PORTFOLIO, TESTIMONIALS, FAQS, TRUST_STATS, WHY_US_PILLARS } from './data';

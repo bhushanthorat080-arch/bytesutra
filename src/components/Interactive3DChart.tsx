@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sparkles, TrendingUp, Zap, Clock, Users, ArrowUpRight, BarChart3, HelpCircle } from 'lucide-react';
+import Sparkles from 'lucide-react/dist/esm/icons/sparkles';
+import TrendingUp from 'lucide-react/dist/esm/icons/trending-up';
+import Zap from 'lucide-react/dist/esm/icons/zap';
+import Clock from 'lucide-react/dist/esm/icons/clock';
+import Users from 'lucide-react/dist/esm/icons/users';
+import ArrowUpRight from 'lucide-react/dist/esm/icons/arrow-up-right';
+import BarChart3 from 'lucide-react/dist/esm/icons/bar-chart-3';
+import HelpCircle from 'lucide-react/dist/esm/icons/help-circle';
 
 interface MetricPoint {
   label: string;

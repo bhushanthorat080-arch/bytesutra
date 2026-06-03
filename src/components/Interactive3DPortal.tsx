@@ -1,6 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
-import { Sparkles, Terminal, Activity, Layers, Play, Zap, ArrowDown, Cpu, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import Sparkles from 'lucide-react/dist/esm/icons/sparkles';
+import Terminal from 'lucide-react/dist/esm/icons/terminal';
+import Activity from 'lucide-react/dist/esm/icons/activity';
+import Layers from 'lucide-react/dist/esm/icons/layers';
+import Play from 'lucide-react/dist/esm/icons/play';
+import Zap from 'lucide-react/dist/esm/icons/zap';
+import ArrowDown from 'lucide-react/dist/esm/icons/arrow-down';
+import Cpu from 'lucide-react/dist/esm/icons/cpu';
+import ShieldAlert from 'lucide-react/dist/esm/icons/shield-alert';
+import CheckCircle2 from 'lucide-react/dist/esm/icons/check-circle-2';
 
 export const Interactive3DPortal: React.FC = () => {
   // Glow variant selectors
