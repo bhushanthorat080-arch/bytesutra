@@ -1,5 +1,4 @@
 import React from 'react';
-import logoImg from '@/assets/logo.webp';
 
 interface LogoProps {
   className?: string;
@@ -33,7 +32,7 @@ export const ByteSutraLogo: React.FC<LogoProps> = ({
           style={{ width: iconSize, height: iconSize }}
         >
           <img
-            src={logoImg}
+            src="/logo.webp"
             alt="Byte Sutra Logo"
             className="w-full h-full object-contain transition-transform duration-500 hover:scale-105"
           />
@@ -44,7 +43,7 @@ export const ByteSutraLogo: React.FC<LogoProps> = ({
           style={{ width: iconSize, height: iconSize }}
         >
           <img
-            src={logoImg}
+            src="/logo.webp"
             alt="Byte Sutra"
             className="absolute max-w-none transition-transform duration-500 hover:scale-110"
             style={{
