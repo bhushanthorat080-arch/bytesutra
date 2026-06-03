@@ -2186,7 +2186,7 @@ export default function App() {
                       </div>
 
                       <p className="text-[11px] text-slate-500 leading-relaxed max-w-xs font-semibold">
-                        A personalized calendar synchronization invite has been dispatched to <span className="font-bold text-[#1e3a8a]">{formData.email || 'your email'}</span>. One of our lead software advisors will attend the call with an original analysis of your platform's speed and conversion opportunities.
+                        A personalized calendar synchronization invite has been dispatched to <span className="font-bold text-[#1e3a8a]">bytesutra@gmail.com</span>. One of our lead software advisors will attend the call with an original analysis of your platform's speed and conversion opportunities.
                       </p>
 
                       <button
