@@ -1,0 +1,7 @@
+# Robots.txt file for Byte Sutra
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+Sitemap: https://bytesutra.com/sitemap.xml
